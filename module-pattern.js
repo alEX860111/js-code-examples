@@ -8,7 +8,7 @@ var objectMaker = function() {
 
     var privateMethod = function() {
         return privateVariable;
-    }
+    };
 
     return {
         publicVariable: 'public',
