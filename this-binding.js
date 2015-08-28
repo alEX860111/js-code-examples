@@ -26,8 +26,17 @@ foo.call(anotherObj, 2, 3); // 1005
 var bar = foo.bind(anotherObj);
 bar(2, 3); // 1005
 
+function Person(name) {
+	this.name = name;
+}
 // new binding (constructor invocation pattern)
+var joe = new Person("joe");
 
+Person.prototype.greet = function() {
+	console.log("hello from " + this.name);
+};
+
+joe.greet();
 
 
 
