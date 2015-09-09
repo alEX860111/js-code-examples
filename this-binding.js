@@ -1,42 +1,60 @@
-function foo(b, c) {
-	console.log(this.a + b + c);
+// default binding (function invocation pattern)
+
+function foo() {
+	console.log(this.a);
 }
 
-var a = 10;
+var a = 1;
+
+
+foo(); // 1
+
+// implicit binding (method invocation pattern)
+
+function foo() {
+	console.log(this.a);
+}
 
 var obj = {
-	a: 100,
+	a: 2,
 	foo: foo
 };
 
-var anotherObj = {
-	a: 1000
-};
-
-// default binding (function invocation pattern)
-foo(2, 3); // 15
-
-// implicit binding (method invocation pattern)
-obj.foo(2, 3) // 105
+obj.foo() // 2
 
 // explicit binding
-foo.apply(anotherObj, [2, 3]); // 1005
-foo.call(anotherObj, 2, 3); // 1005
+function foo(x, y) {
+	console.log(this.a + x + y);
+}
 
-var bar = foo.bind(anotherObj);
-bar(2, 3); // 1005
+var obj = {
+	a: 3
+};
 
+foo.apply(obj, [4, 5]); // 12
+foo.call(obj, 4, 5); // 12
+
+var bar = foo.bind(obj);
+bar(4, 5); // 12
+
+
+// new binding (constructor invocation pattern)
 function Person(name) {
 	this.name = name;
 }
-// new binding (constructor invocation pattern)
+
 var joe = new Person("joe");
 
 Person.prototype.greet = function() {
 	console.log("hello from " + this.name);
 };
 
-joe.greet();
+joe.name // joe
+joe.greet(); // hello from joe
+joe.hasOwnProperty("name"); // true
+joe.hasOwnProperty("greet"); // false
+Object.getPrototypeOf(joe) === Person.prototype // true
+Person.prototype.isPrototypeOf(joe) // true
 
 
 
