@@ -1,35 +1,23 @@
 // cb
 
-var data = "abc";
-
 function asynch(cb) {
 	setTimeout(function() {
 		cb("hello world");
 	}, 500);
 }
 
-asynch(function(res) {
-	data = res;
+asynch(function(data) {
 	console.log(data);
 });
-
-console.log(data);
 
 // promise
 
 function asynch() {
-	var callback;
-	var promise = {
-		then: function(cb) {
-			callback = cb;
-		}
-	};
-
-	setTimeout(function() {
-		callback("hello world");
-	}, 500);
-
-	return promise;
+	return new Promise(function(resolve, reject) {
+		setTimeout(function() {
+			resolve("hello world");
+		}, 500);
+	});
 }
 
 asynch().then(function(res) {
